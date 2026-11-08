@@ -1,0 +1,26 @@
+{
+    "name": "dpi/namespace-shortener-core",
+    "description": "Tool-independent logic for Namespace Shortener: imports configured namespace roots and rewrites every usage to go through them",
+    "type": "library",
+    "license": "BSD-3-Clause",
+    "keywords": ["namespace", "imports", "coding-standard", "dev"],
+    "homepage": "https://dpi.github.io/namespace-shortener/",
+    "support": {
+        "docs": "https://dpi.github.io/namespace-shortener/",
+        "source": "https://github.com/dpi/namespace-shortener"
+    },
+    "require": {
+        "php": ">=8.3",
+        "nikic/php-parser": "^5.6",
+        "phpstan/phpdoc-parser": "^2.3",
+        "thecodingmachine/safe": "^3.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dpi\\NamespaceShortener\\Core\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

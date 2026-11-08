@@ -1,0 +1,40 @@
+--ROOTS--
+A\B\C\*
+--INPUT--
+<?php
+
+namespace App;
+
+use A\B\C\D\E;
+use A\B\C\D\T;
+
+/**
+ * @template T
+ *
+ * @param T $value
+ *
+ * @return T
+ */
+function identity($value)
+{
+    return new E();
+}
+--EXPECTED--
+<?php
+
+namespace App;
+
+use A\B\C\D;
+use A\B\C\D\T;
+
+/**
+ * @template T
+ *
+ * @param T $value
+ *
+ * @return T
+ */
+function identity($value)
+{
+    return new D\E();
+}

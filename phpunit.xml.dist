@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         cacheDirectory=".phpunit.cache"
+         colors="true"
+         failOnDeprecation="true"
+         failOnNotice="true"
+         failOnWarning="true"
+         failOnRisky="true"
+         beStrictAboutOutputDuringTests="true">
+    <testsuites>
+        <testsuite name="core">
+            <directory>packages/core/tests</directory>
+        </testsuite>
+        <testsuite name="php-cs-fixer">
+            <directory>packages/php-cs-fixer/tests</directory>
+        </testsuite>
+        <testsuite name="php-codesniffer">
+            <directory>packages/php-codesniffer/tests</directory>
+        </testsuite>
+        <testsuite name="docs">
+            <file>tests/DocumentationTest.php</file>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory>packages/core/src</directory>
+            <directory>packages/php-cs-fixer/src</directory>
+            <directory>packages/php-codesniffer/src</directory>
+        </include>
+    </source>
+</phpunit>

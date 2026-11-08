@@ -1,0 +1,16 @@
+--ROOTS--
+A\B\C\*
+--INPUT--
+<?php
+
+declare(strict_types=1);
+
+new \A\B\C\D\E();
+--EXPECTED--
+<?php
+
+declare(strict_types=1);
+
+use A\B\C\D;
+
+new D\E();

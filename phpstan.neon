@@ -1,0 +1,15 @@
+parameters:
+    level: max
+    phpVersion: 80300
+    paths:
+        - packages/core/src
+        - packages/core/tests
+        - packages/php-cs-fixer/src
+        - packages/php-cs-fixer/tests
+        - packages/php-codesniffer/src
+        - packages/php-codesniffer/tests
+        - tests
+    scanDirectories:
+        - vendor/squizlabs/php_codesniffer/src
+    excludePaths:
+        - tests/Fixtures

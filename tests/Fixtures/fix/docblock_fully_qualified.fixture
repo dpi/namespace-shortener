@@ -1,0 +1,18 @@
+--ROOTS--
+A\B\C\*
+--INPUT--
+<?php
+
+namespace App;
+
+/** @var \A\B\C\D\E $e */
+$e = make();
+--EXPECTED--
+<?php
+
+namespace App;
+
+use A\B\C\D;
+
+/** @var D\E $e */
+$e = make();

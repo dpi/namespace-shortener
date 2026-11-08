@@ -1,0 +1,98 @@
+--ROOTS--
+A\B\C\*
+--INPUT--
+<?php
+
+namespace App;
+
+use A\B\C\D\E;
+use A\B\C\D\Iface;
+use A\B\C\D\Tr;
+use A\B\C\D\Attr;
+use A\B\C\D\Ex;
+
+#[Attr]
+#[Attr(E::class)]
+abstract class Foo extends E implements Iface
+{
+    use Tr;
+
+    public const E|null X = null;
+
+    public E $property;
+
+    public ?E $nullable = null;
+
+    public E|Iface $union;
+
+    public E&Iface $intersection;
+
+    public (E&Iface)|null $dnf;
+
+    public function method(E $param, E ...$variadic): E
+    {
+        $a = new E();
+        $b = E::create();
+        $c = E::CONSTANT;
+        $d = E::$static;
+        $e = E::class;
+        $f = $a instanceof E;
+        $g = static fn (E $x): E => $x;
+        $h = function (E $x) use ($a): E {
+            return $x;
+        };
+
+        try {
+            throw new Ex();
+        } catch (Ex|E $exception) {
+        }
+
+        return $a;
+    }
+}
+--EXPECTED--
+<?php
+
+namespace App;
+
+use A\B\C\D;
+
+#[D\Attr]
+#[D\Attr(D\E::class)]
+abstract class Foo extends D\E implements D\Iface
+{
+    use D\Tr;
+
+    public const D\E|null X = null;
+
+    public D\E $property;
+
+    public ?D\E $nullable = null;
+
+    public D\E|D\Iface $union;
+
+    public D\E&D\Iface $intersection;
+
+    public (D\E&D\Iface)|null $dnf;
+
+    public function method(D\E $param, D\E ...$variadic): D\E
+    {
+        $a = new D\E();
+        $b = D\E::create();
+        $c = D\E::CONSTANT;
+        $d = D\E::$static;
+        $e = D\E::class;
+        $f = $a instanceof D\E;
+        $g = static fn (D\E $x): D\E => $x;
+        $h = function (D\E $x) use ($a): D\E {
+            return $x;
+        };
+
+        try {
+            throw new D\Ex();
+        } catch (D\Ex|D\E $exception) {
+        }
+
+        return $a;
+    }
+}

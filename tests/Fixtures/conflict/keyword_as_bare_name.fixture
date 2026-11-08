@@ -1,0 +1,10 @@
+--ROOTS--
+A\B\*
+--INPUT--
+<?php
+
+namespace App;
+
+new \A\B\List();
+--ERROR--
+KeywordAsBareName|5|PHP keyword

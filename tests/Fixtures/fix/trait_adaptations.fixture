@@ -1,0 +1,31 @@
+--ROOTS--
+A\B\C\*
+--INPUT--
+<?php
+
+namespace App;
+
+use A\B\C\D\T1;
+use A\B\C\D\T2;
+
+class Foo
+{
+    use T1, T2 {
+        T1::run insteadof T2;
+        T2::run as other;
+    }
+}
+--EXPECTED--
+<?php
+
+namespace App;
+
+use A\B\C\D;
+
+class Foo
+{
+    use D\T1, D\T2 {
+        D\T1::run insteadof D\T2;
+        D\T2::run as other;
+    }
+}

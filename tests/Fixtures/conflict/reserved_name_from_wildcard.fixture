@@ -1,0 +1,12 @@
+--ROOTS--
+A\B\*
+--INPUT--
+<?php
+
+namespace App;
+
+use A\B\String\E;
+
+new E();
+--ERROR--
+ReservedName|7|PHP reserves that name

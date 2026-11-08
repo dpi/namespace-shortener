@@ -1,0 +1,91 @@
+--ROOTS--
+A\B\C\*
+--INPUT--
+<?php
+
+namespace App;
+
+use A\B\C\D\E;
+use A\B\C\D\F;
+
+/**
+ * @property E $property
+ * @method E method(F $f)
+ * @mixin E
+ * @extends Base<E>
+ */
+abstract class Foo
+{
+    /**
+     * @var array<string, E>
+     */
+    public array $a;
+
+    /**
+     * @var E[]
+     */
+    public array $b;
+
+    /**
+     * @var array{key: E, E: int}
+     */
+    public array $c;
+
+    /**
+     * @param E|null $e
+     * @param list<E> $list
+     * @param class-string<E> $class
+     * @param callable(E): F $callback
+     * @param E::CONSTANT $constant
+     * @param int<0, max> $range
+     *
+     * @return E|F
+     *
+     * @throws E
+     */
+    abstract public function method($e, $list, $class, $callback, $constant, $range);
+}
+--EXPECTED--
+<?php
+
+namespace App;
+
+use A\B\C\D;
+
+/**
+ * @property D\E $property
+ * @method D\E method(D\F $f)
+ * @mixin D\E
+ * @extends Base<D\E>
+ */
+abstract class Foo
+{
+    /**
+     * @var array<string, D\E>
+     */
+    public array $a;
+
+    /**
+     * @var D\E[]
+     */
+    public array $b;
+
+    /**
+     * @var array{key: D\E, E: int}
+     */
+    public array $c;
+
+    /**
+     * @param D\E|null $e
+     * @param list<D\E> $list
+     * @param class-string<D\E> $class
+     * @param callable(D\E): D\F $callback
+     * @param D\E::CONSTANT $constant
+     * @param int<0, max> $range
+     *
+     * @return D\E|D\F
+     *
+     * @throws D\E
+     */
+    abstract public function method($e, $list, $class, $callback, $constant, $range);
+}

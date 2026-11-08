@@ -1,0 +1,33 @@
+--ROOTS--
+A\B\C\*
+--INPUT--
+<?php
+
+namespace App;
+
+use A\B\C\D\Column;
+use A\B\C\D\Mapping;
+
+/**
+ * @Column(type="string")
+ * @Mapping\Entity
+ * @column is a different thing, tags match imports exactly.
+ */
+class Foo
+{
+}
+--EXPECTED--
+<?php
+
+namespace App;
+
+use A\B\C\D;
+
+/**
+ * @D\Column(type="string")
+ * @D\Mapping\Entity
+ * @column is a different thing, tags match imports exactly.
+ */
+class Foo
+{
+}

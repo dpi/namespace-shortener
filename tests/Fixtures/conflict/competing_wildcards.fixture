@@ -1,0 +1,15 @@
+--ROOTS--
+A\B\*
+X\Y\*
+--INPUT--
+<?php
+
+namespace App;
+
+use A\B\D\E;
+use X\Y\D\F;
+
+new E();
+new F();
+--ERROR--
+CompetingRoots|9|Both "A\B\D" and "X\Y\D"

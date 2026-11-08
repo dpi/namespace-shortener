@@ -1,0 +1,29 @@
+--ROOTS--
+A\B\C\*
+--INPUT--
+<?php
+
+namespace App;
+
+use X\{Keep, A\Other as Other2, function helper};
+use A\B\C\{D\E, Sibling};
+
+new Keep();
+new Other2();
+new E();
+new Sibling();
+helper();
+--EXPECTED--
+<?php
+
+namespace App;
+
+use X\{Keep, A\Other as Other2, function helper};
+use A\B\C\D;
+use A\B\C\Sibling;
+
+new Keep();
+new Other2();
+new D\E();
+new Sibling();
+helper();

@@ -1,0 +1,6 @@
+--ROOTS--
+A\B\C\*
+--INPUT--
+<?php{CRLF}{CRLF}namespace App;{CRLF}{CRLF}use A\B\C\D\E, X\Y;{CRLF}{CRLF}new E();{CRLF}new Y();
+--EXPECTED--
+<?php{CRLF}{CRLF}namespace App;{CRLF}{CRLF}use A\B\C\D;{CRLF}use X\Y;{CRLF}{CRLF}new D\E();{CRLF}new Y();

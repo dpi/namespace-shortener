@@ -1,0 +1,26 @@
+--ROOTS--
+G\H\I
+--INPUT--
+<?php
+
+namespace G\H;
+
+use G\H\I\J;
+
+class I
+{
+}
+
+new J();
+--EXPECTED--
+<?php
+
+namespace G\H;
+
+use G\H\I;
+
+class I
+{
+}
+
+new I\J();

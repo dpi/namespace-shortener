@@ -1,0 +1,36 @@
+--ROOTS--
+A\*
+--INPUT--
+<?php
+
+namespace App;
+
+use A\List\Foo;
+
+/**
+ * @param array $a
+ * @param list $b
+ * @param list<string> $c
+ * @param mixed $d
+ */
+function run($a, $b, $c, $d): Foo
+{
+    return new Foo();
+}
+--EXPECTED--
+<?php
+
+namespace App;
+
+use A\List;
+
+/**
+ * @param array $a
+ * @param list $b
+ * @param list<string> $c
+ * @param mixed $d
+ */
+function run($a, $b, $c, $d): List\Foo
+{
+    return new List\Foo();
+}

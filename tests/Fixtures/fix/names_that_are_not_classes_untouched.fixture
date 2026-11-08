@@ -1,0 +1,74 @@
+--ROOTS--
+A\B\C\*
+--INPUT--
+<?php
+
+namespace App;
+
+use A\B\C\D\E;
+
+const E = 1;
+
+function E(): void
+{
+}
+
+class Foo
+{
+    public const E = 2;
+
+    public $E;
+
+    public function E(int $E): void
+    {
+        echo E;
+        E();
+        $this->E;
+        $this->E();
+        self::E;
+        self::E();
+        bar(E: 1);
+        goto E;
+        E:
+        echo "E", 'E', "{$E}";
+    }
+}
+
+// E is mentioned in a comment.
+new E();
+--EXPECTED--
+<?php
+
+namespace App;
+
+use A\B\C\D;
+
+const E = 1;
+
+function E(): void
+{
+}
+
+class Foo
+{
+    public const E = 2;
+
+    public $E;
+
+    public function E(int $E): void
+    {
+        echo E;
+        E();
+        $this->E;
+        $this->E();
+        self::E;
+        self::E();
+        bar(E: 1);
+        goto E;
+        E:
+        echo "E", 'E', "{$E}";
+    }
+}
+
+// E is mentioned in a comment.
+new D\E();

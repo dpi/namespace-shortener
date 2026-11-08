@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<ruleset name="DpiNamespaceShortener" namespace="Dpi\NamespaceShortener\PhpCodeSniffer\DpiNamespaceShortener">
+    <description>Imports the configured namespace roots, and rewrites usages to go through them.</description>
+</ruleset>

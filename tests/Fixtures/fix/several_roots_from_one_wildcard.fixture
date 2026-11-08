@@ -1,0 +1,22 @@
+--ROOTS--
+A\B\*
+--INPUT--
+<?php
+
+namespace App;
+
+use A\B\C\D;
+use A\B\E\F;
+
+new D();
+new F();
+--EXPECTED--
+<?php
+
+namespace App;
+
+use A\B\C;
+use A\B\E;
+
+new C\D();
+new E\F();

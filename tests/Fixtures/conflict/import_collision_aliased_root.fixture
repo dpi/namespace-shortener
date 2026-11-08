@@ -1,0 +1,13 @@
+--ROOTS--
+G\H\I as L
+--INPUT--
+<?php
+
+namespace App;
+
+use X\Y as L;
+use G\H\I\J;
+
+new J();
+--ERROR--
+ImportCollision|8|already used by the import of "X\Y"

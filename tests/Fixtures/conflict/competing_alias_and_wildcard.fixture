@@ -1,0 +1,12 @@
+--ROOTS--
+G\H as D
+A\B\*
+--INPUT--
+<?php
+
+namespace App;
+
+new \G\H\I();
+new \A\B\D\E();
+--ERROR--
+CompetingRoots|6|would be imported as "D"

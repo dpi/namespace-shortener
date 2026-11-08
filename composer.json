@@ -1,0 +1,64 @@
+{
+    "name": "dpi/namespace-shortener",
+    "description": "Monorepo for Namespace Shortener: the rule's core library, and its adapters for PHP-CS-Fixer and PHP_CodeSniffer",
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "homepage": "https://dpi.github.io/namespace-shortener/",
+    "support": {
+        "docs": "https://dpi.github.io/namespace-shortener/",
+        "source": "https://github.com/dpi/namespace-shortener"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "packages/*",
+            "options": {
+                "symlink": true,
+                "versions": {
+                    "dpi/namespace-shortener-core": "0.1.0",
+                    "dpi/namespace-shortener-php-cs-fixer": "0.1.0",
+                    "dpi/namespace-shortener-phpcs": "0.1.0"
+                }
+            }
+        }
+    ],
+    "require": {
+        "php": ">=8.3"
+    },
+    "require-dev": {
+        "dpi/namespace-shortener-core": "^0.1",
+        "dpi/namespace-shortener-php-cs-fixer": "^0.1",
+        "dpi/namespace-shortener-phpcs": "^0.1",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "phpunit/phpunit": "^12.5",
+        "thecodingmachine/phpstan-safe-rule": "^1.4",
+        "thecodingmachine/safe": "^3.4"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Dpi\\NamespaceShortener\\Core\\Tests\\": "packages/core/tests/",
+            "Dpi\\NamespaceShortener\\PhpCodeSniffer\\Tests\\": "packages/php-codesniffer/tests/",
+            "Dpi\\NamespaceShortener\\PhpCsFixer\\Tests\\": "packages/php-cs-fixer/tests/",
+            "Dpi\\NamespaceShortener\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "phpstan/extension-installer": true
+        },
+        "platform": {
+            "php": "8.3.0"
+        },
+        "sort-packages": true
+    },
+    "scripts": {
+        "cs": "php-cs-fixer check --diff",
+        "cs:fix": "php-cs-fixer fix",
+        "stan": "phpstan analyse",
+        "test": "phpunit",
+        "ci": ["@cs", "@stan", "@test"]
+    }
+}

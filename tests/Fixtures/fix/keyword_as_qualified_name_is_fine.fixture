@@ -1,0 +1,18 @@
+--ROOTS--
+Foo\*
+--INPUT--
+<?php
+
+namespace App;
+
+use Foo\List\Bar;
+
+new Bar();
+--EXPECTED--
+<?php
+
+namespace App;
+
+use Foo\List;
+
+new List\Bar();

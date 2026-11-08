@@ -1,0 +1,34 @@
+--ROOTS--
+self\*
+--INPUT--
+<?php
+
+namespace App;
+
+class Foo extends \Bar
+{
+    public function x(): static
+    {
+        new self();
+        new parent();
+        new static();
+
+        return $this;
+    }
+}
+--EXPECTED--
+<?php
+
+namespace App;
+
+class Foo extends \Bar
+{
+    public function x(): static
+    {
+        new self();
+        new parent();
+        new static();
+
+        return $this;
+    }
+}

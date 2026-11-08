@@ -1,0 +1,10 @@
+--ROOTS--
+A\B\*
+--INPUT--
+<?php
+
+namespace App;
+
+new \A\B\OBJECT\E();
+--ERROR--
+ReservedName|5|PHP reserves that name

@@ -1,0 +1,20 @@
+--ROOTS--
+G\H\I as L
+--INPUT--
+<?php
+
+namespace App;
+
+use G\H\I as Z;
+
+new Z();
+new Z\J();
+--EXPECTED--
+<?php
+
+namespace App;
+
+use G\H\I as L;
+
+new L();
+new L\J();

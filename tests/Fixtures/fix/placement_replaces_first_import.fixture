@@ -1,0 +1,33 @@
+--ROOTS--
+A\B\C\*
+--INPUT--
+<?php
+
+namespace App;
+
+use Zed\First;
+use A\B\C\D\E;
+use Middle\Second;
+use A\B\C\D\F;
+use Apple\Third;
+
+new First();
+new E();
+new Second();
+new F();
+new Third();
+--EXPECTED--
+<?php
+
+namespace App;
+
+use Zed\First;
+use A\B\C\D;
+use Middle\Second;
+use Apple\Third;
+
+new First();
+new D\E();
+new Second();
+new D\F();
+new Third();

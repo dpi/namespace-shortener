@@ -1,0 +1,104 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # The CLI tests can outlast Composer's default limit of 300 seconds for a script.
+  COMPOSER_PROCESS_TIMEOUT: 0
+
+jobs:
+  validate:
+    name: Composer validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+      - run: composer validate --strict --no-check-publish
+      - name: Validate each package
+        run: |
+          for file in packages/*/composer.json; do
+            composer validate --strict --no-check-publish --no-check-lock "$file"
+          done
+
+  cs:
+    name: PHP-CS-Fixer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+      - uses: ramsey/composer-install@v4
+      - run: composer cs
+
+  phpstan:
+    name: PHPStan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+      - uses: ramsey/composer-install@v4
+      - run: composer stan
+
+  tests:
+    name: PHPUnit (PHP ${{ matrix.php }}, ${{ matrix.dependency-versions }} dependencies)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.3', '8.4', '8.5']
+        dependency-versions: ['highest', 'lowest']
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+      - uses: ramsey/composer-install@v4
+        with:
+          dependency-versions: ${{ matrix.dependency-versions }}
+      - run: composer test
+
+  tests-phpcs-3:
+    name: PHPUnit (PHP ${{ matrix.php }}, PHP_CodeSniffer 3)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.3', '8.4', '8.5']
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+      - uses: ramsey/composer-install@v4
+      - run: composer require --dev --with-all-dependencies --no-interaction --no-progress 'squizlabs/php_codesniffer:^3.13'
+      - run: vendor/bin/phpunit --testsuite php-codesniffer

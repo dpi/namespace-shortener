@@ -1,0 +1,16 @@
+--ROOTS--
+A\B\C\*
+--INPUT--
+<?php
+
+namespace A\B\C;
+
+new D\E();
+new namespace\D\F();
+--EXPECTED--
+<?php
+
+namespace A\B\C;
+
+new D\E();
+new namespace\D\F();

@@ -1,0 +1,18 @@
+--ROOTS--
+G\H\I
+--INPUT--
+<?php
+
+namespace App;
+
+use G\H\I\J as I;
+
+new I();
+--EXPECTED--
+<?php
+
+namespace App;
+
+use G\H\I;
+
+new I\J();

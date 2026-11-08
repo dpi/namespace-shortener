@@ -1,0 +1,11 @@
+--ROOTS--
+A\B\C\*
+--INPUT--
+<?php
+
+use A\B\C\D\E;
+
+new D();
+new E();
+--ERROR--
+ImplicitNamespaceName|5|"D"

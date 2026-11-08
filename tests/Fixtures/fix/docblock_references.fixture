@@ -1,0 +1,38 @@
+--ROOTS--
+A\B\C\*
+--INPUT--
+<?php
+
+namespace App;
+
+use A\B\C\D\E;
+
+/**
+ * Prose mentioning E is left as it is, {@see E} and {@link E::method()} are not.
+ *
+ * @see E
+ * @see E::method()
+ * @see https://example.com/E
+ * @see helper()
+ * @uses E
+ * @covers E::run
+ */
+new E();
+--EXPECTED--
+<?php
+
+namespace App;
+
+use A\B\C\D;
+
+/**
+ * Prose mentioning E is left as it is, {@see D\E} and {@link D\E::method()} are not.
+ *
+ * @see D\E
+ * @see D\E::method()
+ * @see https://example.com/E
+ * @see helper()
+ * @uses D\E
+ * @covers D\E::run
+ */
+new D\E();

@@ -1,0 +1,7 @@
+/vendor/
+/.php-cs-fixer.cache
+/.phpunit.cache/
+/docs/node_modules/
+/docs/.vitepress/dist/
+/docs/.vitepress/cache/
+.idea/

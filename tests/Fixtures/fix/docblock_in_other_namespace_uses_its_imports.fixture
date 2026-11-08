@@ -1,0 +1,30 @@
+--ROOTS--
+A\B\C\*
+--INPUT--
+<?php
+
+namespace First {
+    use A\B\C\D\E;
+
+    /** @var E $e */
+    $e = new E();
+}
+
+namespace Second {
+    /** @var E $e */
+    $e = make();
+}
+--EXPECTED--
+<?php
+
+namespace First {
+    use A\B\C\D;
+
+    /** @var D\E $e */
+    $e = new D\E();
+}
+
+namespace Second {
+    /** @var E $e */
+    $e = make();
+}

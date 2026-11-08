@@ -1,0 +1,40 @@
+--ROOTS--
+A\B\C\*
+--INPUT--
+<?php
+
+namespace App;
+
+use A\B\C\D\E;
+
+/**
+ * @param E
+ * @param array<string, E>
+ * @param E|null Some description mentioning E.
+ * @param $alsoInvalid E is just a word here.
+ * @var array<E
+ * @return E Some description mentioning E.
+ * @throws E When E fails.
+ */
+function run($e)
+{
+}
+--EXPECTED--
+<?php
+
+namespace App;
+
+use A\B\C\D;
+
+/**
+ * @param D\E
+ * @param array<string, D\E>
+ * @param D\E|null Some description mentioning E.
+ * @param $alsoInvalid E is just a word here.
+ * @var array<E
+ * @return D\E Some description mentioning E.
+ * @throws D\E When E fails.
+ */
+function run($e)
+{
+}

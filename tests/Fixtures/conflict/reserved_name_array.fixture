@@ -1,0 +1,12 @@
+--ROOTS--
+A\*
+--INPUT--
+<?php
+
+namespace App;
+
+use A\Array\Foo;
+
+new Foo();
+--ERROR--
+ReservedName|7|PHP reserves that name

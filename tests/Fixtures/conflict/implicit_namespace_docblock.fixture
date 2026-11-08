@@ -1,0 +1,13 @@
+--ROOTS--
+A\B\C\*
+--INPUT--
+<?php
+
+namespace App;
+
+use A\B\C\D\E;
+
+/** @var D $d */
+$d = new E();
+--ERROR--
+ImplicitNamespaceName|7|"App\D"

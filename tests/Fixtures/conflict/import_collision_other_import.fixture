@@ -1,0 +1,14 @@
+--ROOTS--
+A\B\C\*
+--INPUT--
+<?php
+
+namespace App;
+
+use X\D;
+use A\B\C\D\E;
+
+new D();
+new E();
+--ERROR--
+ImportCollision|9|already used by the import of "X\D"

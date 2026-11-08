@@ -1,0 +1,13 @@
+--ROOTS--
+A\B\C\*
+--INPUT--
+<?php
+
+namespace App;
+
+use A\B\C\D\E;
+
+new D();
+new E();
+--ERROR--
+ImplicitNamespaceName|7|would change it to mean something else

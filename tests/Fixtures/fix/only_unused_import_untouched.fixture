@@ -1,0 +1,14 @@
+--ROOTS--
+A\B\C\*
+--INPUT--
+<?php
+
+namespace App;
+
+use A\B\C\D\Unused;
+--EXPECTED--
+<?php
+
+namespace App;
+
+use A\B\C\D\Unused;
