@@ -27,8 +27,8 @@ Run `composer install` at the root, and run everything from there. There's one `
 
 ## Adding a tool
 
-1. Create `packages/<tool>`, with a `composer.json` requiring the core package and the tool, and with the `dev` keyword, so that `composer require` recommends `--dev`. Give it the `LICENSE` and `.gitattributes` the others have.
-2. Add it to the path repository's `versions` and to `require-dev` in the root `composer.json`, and to the `autoload-dev` section for its tests.
+1. Create `packages/<tool>`, with a `composer.json` requiring the core package at `self.version` and the tool, and with the `dev` keyword, so that `composer require` recommends `--dev`. Give it the `LICENSE` and `.gitattributes` the others have.
+2. Add it to `require-dev` in the root `composer.json` at `@dev`, and to the `autoload-dev` section for its tests.
 3. Add its `src` and `tests` to `phpstan.neon`, and add a test suite to `phpunit.xml.dist`.
 4. Translate the [conflicts](../guide/errors#conflicts) and other exceptions from `Rewriter` into the tool's failures. Use `Rewriter::rewrite()` if the tool takes a whole file, or `Rewriter::plan()` if it reports each change.
 5. Add a [tool page](../tools/), a tab in each guide page that has them, and a row in the table above.
@@ -36,7 +36,9 @@ Run `composer install` at the root, and run everything from there. There's one `
 
 ## Versions
 
-The packages share one version number, and depend on each other by it. The path repository in the root `composer.json` sets the version that the packages have locally, so raise it there along with their constraints.
+The packages share one version number, and the Git tag is the only place it's set. Each adapter requires the core package at `self.version`, which means exactly the adapter's own version, so nothing needs raising before you tag.
+
+Locally, Composer takes the packages' version from Git, such as `dev-main`, and the root `composer.json` accepts it with `@dev`. Running `composer update` on another branch changes those versions in `composer.lock`, so don't commit that part of the change.
 
 ## Publishing
 
@@ -51,8 +53,8 @@ Composer needs each package's `composer.json` at the root of its own repository,
 Every push to `main` updates each repository's `main`, so make changes here, not there. Pushing a tag starting with `v` to this repository creates the same tag in all of them, which publishes that version of every package:
 
 ```sh
-git tag v0.1.0
-git push origin v0.1.0
+git tag v1.0.0-beta2
+git push origin v1.0.0-beta2
 ```
 
 The workflow pushes with the `SPLIT_TOKEN` secret, a fine-grained personal access token with read and write access to the contents of those repositories. It never force pushes, so its run fails if a repository has diverged, or if a tag already exists there on a different commit.

@@ -26,14 +26,16 @@ Install the package for your tool:
 ::: code-group
 
 ```sh [PHP-CS-Fixer]
-composer require --dev dpi/namespace-shortener-php-cs-fixer
+composer require --dev dpi/namespace-shortener-core:^1.0@beta dpi/namespace-shortener-php-cs-fixer:^1.0@beta
 ```
 
 ```sh [PHP_CodeSniffer]
-composer require --dev dpi/namespace-shortener-phpcs
+composer require --dev dpi/namespace-shortener-core:^1.0@beta dpi/namespace-shortener-phpcs:^1.0@beta
 ```
 
 :::
+
+The packages are in beta, so Composer only accepts them if you name both packages and allow beta versions of each.
 
 For PHP_CodeSniffer, Composer asks you to allow a plugin, which registers the standard. Say yes.
 

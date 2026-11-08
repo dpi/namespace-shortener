@@ -13,12 +13,7 @@
             "type": "path",
             "url": "packages/*",
             "options": {
-                "symlink": true,
-                "versions": {
-                    "dpi/namespace-shortener-core": "0.1.0",
-                    "dpi/namespace-shortener-php-cs-fixer": "0.1.0",
-                    "dpi/namespace-shortener-phpcs": "0.1.0"
-                }
+                "symlink": true
             }
         }
     ],
@@ -26,9 +21,9 @@
         "php": ">=8.3"
     },
     "require-dev": {
-        "dpi/namespace-shortener-core": "^0.1",
-        "dpi/namespace-shortener-php-cs-fixer": "^0.1",
-        "dpi/namespace-shortener-phpcs": "^0.1",
+        "dpi/namespace-shortener-core": "@dev",
+        "dpi/namespace-shortener-php-cs-fixer": "@dev",
+        "dpi/namespace-shortener-phpcs": "@dev",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-strict-rules": "^2.0",
