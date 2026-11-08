@@ -1,0 +1,55 @@
+name: Split packages
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+concurrency:
+  # Each ref has its own group, as a queued run replaces the one waiting before it, and that mustn't lose a tag.
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  split:
+    name: Split ${{ matrix.directory }}
+    if: github.repository == 'dpi/namespace-shortener'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - directory: core
+            repository: dpi/namespace-shortener-core
+          - directory: php-cs-fixer
+            repository: dpi/namespace-shortener-php-cs-fixer
+          - directory: php-codesniffer
+            repository: dpi/namespace-shortener-phpcs
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Splitting rewrites the package's whole history.
+          fetch-depth: 0
+          persist-credentials: false
+      # v1.0.1 is the newest release with a prebuilt binary. Later ones must be compiled against a matching libgit2.
+      # Don't restore its cache, .git/splitsh.db, between runs. It crashes when splitting an older commit than it has cached.
+      - name: Install splitsh-lite
+        run: |
+          curl --fail --silent --show-error --location --output "$RUNNER_TEMP/splitsh-lite.tar.gz" \
+            https://github.com/splitsh/lite/releases/download/v1.0.1/lite_linux_amd64.tar.gz
+          echo "2539301ce5e21d0ca44b689d0dd2c1b20d9f9e996c1fe6c462afb8af4e7141cc  $RUNNER_TEMP/splitsh-lite.tar.gz" | sha256sum --check --strict
+          tar --extract --gzip --file "$RUNNER_TEMP/splitsh-lite.tar.gz" --directory "$RUNNER_TEMP" ./splitsh-lite
+      - name: Split and push
+        # An empty commit would turn this push into a deletion of the ref, so check it first.
+        # Never force this. Splitting is deterministic, so a rejected push means a repository or tag has diverged.
+        run: |
+          commit="$("$RUNNER_TEMP/splitsh-lite" --prefix="packages/$DIRECTORY" --quiet)"
+          git rev-parse --verify --quiet "${commit}^{commit}"
+          git push "https://x-access-token:${SPLIT_TOKEN}@github.com/${REPOSITORY}.git" "${commit}:${GITHUB_REF}"
+        env:
+          DIRECTORY: ${{ matrix.directory }}
+          REPOSITORY: ${{ matrix.repository }}
+          SPLIT_TOKEN: ${{ secrets.SPLIT_TOKEN }}

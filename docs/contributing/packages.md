@@ -32,9 +32,27 @@ Run `composer install` at the root, and run everything from there. There's one `
 3. Add its `src` and `tests` to `phpstan.neon`, and add a test suite to `phpunit.xml.dist`.
 4. Translate the [conflicts](../guide/errors#conflicts) and other exceptions from `Rewriter` into the tool's failures. Use `Rewriter::rewrite()` if the tool takes a whole file, or `Rewriter::plan()` if it reports each change.
 5. Add a [tool page](../tools/), a tab in each guide page that has them, and a row in the table above.
+6. Create its repository, give the `SPLIT_TOKEN` secret access to it, add it to the matrix in `.github/workflows/split.yml`, and register it on Packagist.
 
 ## Versions
 
 The packages share one version number, and depend on each other by it. The path repository in the root `composer.json` sets the version that the packages have locally, so raise it there along with their constraints.
 
-Composer needs each package's `composer.json` at the root of its own repository, so publishing means splitting each directory in `packages` out to a read-only repository, and registering those.
+## Publishing
+
+Composer needs each package's `composer.json` at the root of its own repository, so `.github/workflows/split.yml` uses [splitsh-lite](https://github.com/splitsh/lite) to split each directory in `packages` out to a read-only repository, each registered on Packagist:
+
+| Directory | Repository |
+| --- | --- |
+| `packages/core` | [`dpi/namespace-shortener-core`](https://github.com/dpi/namespace-shortener-core) |
+| `packages/php-cs-fixer` | [`dpi/namespace-shortener-php-cs-fixer`](https://github.com/dpi/namespace-shortener-php-cs-fixer) |
+| `packages/php-codesniffer` | [`dpi/namespace-shortener-phpcs`](https://github.com/dpi/namespace-shortener-phpcs) |
+
+Every push to `main` updates each repository's `main`, so make changes here, not there. Pushing a tag starting with `v` to this repository creates the same tag in all of them, which publishes that version of every package:
+
+```sh
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+The workflow pushes with the `SPLIT_TOKEN` secret, a fine-grained personal access token with read and write access to the contents of those repositories. It never force pushes, so its run fails if a repository has diverged, or if a tag already exists there on a different commit.
